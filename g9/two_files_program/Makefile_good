@@ -1,0 +1,18 @@
+.PHONY:	all clean install uninstall
+BIN=./bin
+ROOT=./
+OBJ=./object
+
+TARGET=main.exe
+
+all: $(TARGET)
+
+clean:
+		rm -rf $(OBJ)/*.o
+
+$(TARGET): one.cpp two.cpp
+		g++ -o $(TARGET) one.cpp two.cpp
+install:
+		install $(TARGET)	$(BIN)
+uninstall:
+		rm -rf  $(BIN)/$(TARGET)

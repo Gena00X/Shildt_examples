@@ -1,0 +1,31 @@
+.PHONY:	all clean install uninstall
+BIN=./bin
+ROOT=./
+OBJ=./object
+
+TARGET=main.exe
+
+all: $(TARGET)
+
+clean:
+		rm -rf $(OBJ)/*.o
+one.o:	one.cpp
+		cd $(ROOT)/$(OBJ)
+		g++ -c $(ROOT)/one.cpp
+two.o:	two.cpp
+		cd $(ROOT)/$(OBJ)
+		g++ -c $(ROOT)/two.cpp
+$(TARGET): one.o two.o
+		cd $(ROOT)
+		g++ -o $(TARGET) $(OBJ)/one.o $(OBJ)/two.o
+install:
+		install $(TARGET)	$(BIN)
+uninstall:
+		rm -rf  $(BIN)/$(TARGET)
+		
+#C:\Users\User\Desktop\QtPrpjects\ProjectsCPP\shildt\g9\two_files_program>make all
+#g++ -o ./object/one.o one.cpp
+#C:\Users\User\AppData\Local\Temp\ccGnhA5M.o:one.cpp:(.text+0x47): undefined reference to `reset()'
+#C:\Users\User\AppData\Local\Temp\ccGnhA5M.o:one.cpp:(.text+0x5c): undefined reference to `r_avg(int)'
+#collect2.exe: error: ld returned 1 exit status
+#make: *** [one.o] Error 1

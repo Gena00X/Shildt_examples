@@ -1,0 +1,10 @@
+#ifndef TEST_HEDER_HPP
+#define TEST_HEDER_HPP
+
+namespace{
+	int CN_upper_bound = 0;
+	int CN_lower_bound = 0;
+}
+int TH_upper_bound = 15;
+int TH_lower_bound = 10;
+#endif //TEST_HEDER_HPP

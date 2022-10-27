@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="H:\CPP\QtPrpjects\ProjectsCPP\shildt\g21\list\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="H:\CPP\QtPrpjects\ProjectsCPP\shildt\g21\list\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3671E33A-DF78-386E-854A-0E24C21911ED}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

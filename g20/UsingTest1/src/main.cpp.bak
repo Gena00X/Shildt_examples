@@ -1,0 +1,124 @@
+#include <iostream>
+#include "rusinconsole.h"
+#include "test_heder.hpp"
+using namespace std;
+//Демонстрация использования пространства имён
+namespace CounterNamespace{
+	int CN_upper_bound;
+	int CN_lower_bound;
+	
+}
+
+namespace CounterNamespace{
+	//пространство имён можно разбить на несколько частей
+	class counter{
+		int count;
+	public:
+		counter(int n){
+			if(n<=CN_upper_bound) count = n;
+			else count = CN_upper_bound;
+		}
+		
+		void reset(int n){
+			if(n <= CN_upper_bound) count = n;
+		}
+		
+		int run(){
+			if(count > CN_lower_bound) return count--;
+			else return CN_lower_bound;
+		}
+	};
+	
+}
+
+void test1(){
+	CounterNamespace::CN_upper_bound = 100;
+	CounterNamespace::CN_lower_bound = 0;
+	
+	CounterNamespace::counter ob1(10);
+	int i;
+	
+	do{
+		i=ob1.run();
+		cout << "ob1::count=" << i << "\n";
+	}while(i > CounterNamespace::CN_lower_bound);
+	cout<<endl;
+	CounterNamespace::counter ob2(20);
+	
+	do{
+		i=ob2.run();
+		cout << "ob2::count=" << i << "\n";
+	}while(i > CounterNamespace::CN_lower_bound);
+	cout<<endl;
+	ob2.reset(100);
+	CounterNamespace::CN_lower_bound = 90;
+	cout<<"ob2 resetted to 100\n";
+	cout<<"CounterNamespace::lower_bound resetted to 90\n";
+	do{
+		i=ob2.run();
+		cout << "ob2::count=" << i << "\n";
+	}while(i > CounterNamespace::CN_lower_bound);
+	cout<<endl;
+}
+
+void test2(){
+	using CounterNamespace::CN_upper_bound;
+	
+	CN_upper_bound = 100;
+	
+	CounterNamespace::CN_lower_bound = 0;
+	CounterNamespace::counter ob1(10);
+	
+	int i;
+	
+	do{
+		i = ob1.run();
+		cout<<"ob1: "<<i<<"\n";
+	}while(i>CounterNamespace::CN_lower_bound);
+	cout << endl;
+	
+	using namespace CounterNamespace;
+	
+	counter ob2(100);
+	CN_lower_bound = 90;
+	
+	do{
+		i = ob2.run();
+		cout << "ob2: " << i <<"\n";
+	}while(i>CN_lower_bound);
+	
+	cout << endl;
+	
+}
+
+
+void unnamed_namespace_test(){
+	extern void two_show();
+	int test_var_1 = 10;
+	CounterNamespace::CN_upper_bound = TH_upper_bound;
+	CounterNamespace::CN_lower_bound = TH_lower_bound;
+	CounterNamespace::counter ob2(TH_upper_bound);
+	int i;
+	do{
+		i = ob2.run();
+		cout << "ob2: " << i <<"\n";
+	}while(i>TH_lower_bound);
+	cout << endl;
+	cout<< "CounterNamespace::CN_upper_bound =" <<CounterNamespace::CN_upper_bound <<"\n";
+	cout<< "CounterNamespace::CN_lower_bound =" <<CounterNamespace::CN_lower_bound <<"\n";
+	cout << "in main.cpp test_var_1 = "<<test_var_1<<"\n";
+	two_show();
+}
+
+
+int main(int argc, char* argv[]){
+	if(argc==2) cout << "Hello "<<argv[1]<<"\nПривет "<<argv[1]<<endl;
+	else cout << "Hello World!\nПривет Мир!\n";
+	test1();
+	test2();
+	unnamed_namespace_test();
+	
+	
+	return 0;
+}
+

@@ -1,0 +1,189 @@
+#include <iostream>
+#include "rusinconsole.h"
+using namespace std;
+
+class ShareVar{
+	static int num;
+public:
+	void setnum(int i) { num = i; }
+	void shownum() { cout << "num:" << num <<'\n'; }
+};
+
+int ShareVar::num; //определяем tatic-член num
+
+class PublicShareVar{
+public:
+	static int num;
+	void setnum(int i) { num = i; }
+	void shownum() { cout << "PSV num:" << num <<'\n'; }
+};
+
+int PublicShareVar::num;
+
+void ShareVarTest(){
+	ShareVar a, b;
+	PublicShareVar pa, pb;
+	
+	cout << "a initial: ";
+	a.shownum();
+	cout << "b initial: ";
+	b.shownum();
+	
+	cout << "a.setnum(10)\n";
+	a.setnum(10);
+	
+	cout << "a new: ";
+	a.shownum();
+	cout << "b new: ";
+	b.shownum();
+	
+	cout << "PublicShareVar pa initial: ";
+	pa.shownum();
+	cout << "PublicShareVar pb initial: ";
+	pb.shownum();
+	cout << "PublicShareVar::num = 100;\n";
+	PublicShareVar::num = 100;
+	
+	cout << "PublicShareVar pa : ";
+	pa.shownum();
+	cout << "PublicShareVar pb : ";
+	pb.shownum();
+	
+	cout << "pa.setnum(50);\n";
+	pa.setnum(50);
+	
+	cout << "PublicShareVar pa : ";
+	pa.shownum();
+	cout << "PublicShareVar pb : ";
+	pb.shownum();
+}
+
+//применение модификаторов const и mutable
+/*
+ *функция с модификатором const не может 
+ *изменять никакие члены класса кроме тех, 
+ *которые отмечены модификатором mutable
+ */
+ 
+ class X {
+	int some_var;
+public:
+	int f1()const{} ;//данная функция не может изменить переменную some_var
+ };
+ 
+ class Demo{
+	mutable int i;
+	int j;
+public:
+	int geti() const {
+		return i; //всё в порядке
+	}
+	
+	void seti(int x) const {
+		i = x;//ок, так как i mutable-переменная
+	}
+	
+	void setj(int x) const {
+		//j = x; //ошибка: const-функция не может изменить не mutable переменную
+	}
+ };
+ 
+void ConstMutableTest(){
+	Demo ob;
+	
+	ob.seti(1900);
+	cout << ob.geti();
+ }
+ 
+ class myclass{
+	int a;
+public:
+	myclass(int x) { a = x; }
+	int geta(){ return a; }
+ };
+ 
+ class myexplicitclass{
+	int a;
+public:
+	explicit myexplicitclass(int x){ a = x; }
+	int geta(){ return a; }
+ };
+ 
+ void testExplict(){
+	myclass ob(4);
+	cout << "ob = " << ob.geta()<<"\n";
+	ob = 8;//неявное преобразование к типу myclass разрешено 
+	cout << "ob 2 = " << ob.geta();
+	
+	myexplicitclass eob(5);
+	cout << "eob = " << eob.geta()<<"\n";
+	//eob = 10;//Ошибка: неявное преобразование к типу myexplictclass не разрешено 
+	eob = static_cast<myexplicitclass>(10);//ok
+	cout << "eob 2 = " << eob.geta();
+	
+}
+//Синтаксис инициализации членов класса
+ 
+ namespace testSyntax{
+	
+	class myclass1{
+		int numA, numB;
+	public:
+		/* initialising using common syntax*/
+		myclass1(int x, int y){
+		numA = x;
+		numB = y;
+		}
+		
+		int getNumA() { return numA; }
+		int getNumB() { return numB; }
+	};
+	
+	void testMyclass1(){
+		myclass1 ob1(7, 9), ob2(5, 2);
+		
+		cout << "Значения членов данных объекта ob1 равны: "
+			 << ob1.getNumA() << " и " << ob1.getNumB() << endl;
+		
+		cout << "Значения членов данных объекта ob1 равны: "
+			 << ob2.getNumA() << " и " << ob2.getNumB() << endl;
+	}
+	
+	class myclass2{
+		const int numA;
+		const int numB;
+	public:
+		/*initialising using alternative syntax*/
+		myclass2(int x, int y) : numA(x), numB(y){ }//only this syntax usable for const members
+		
+		
+		int getNumA() { return numA; }
+		int getNumB() { return numB; }
+	};
+	
+	void testMyclass2(){
+		myclass2 ob1(77, 99), ob2(55, 22);
+		
+		cout << "Значения членов данных объекта ob1 равны: "
+			 << ob1.getNumA() << " и " << ob1.getNumB() << endl;
+		
+		cout << "Значения членов данных объекта ob1 равны: "
+			 << ob2.getNumA() << " и " << ob2.getNumB() << endl;
+	}
+	void test(){
+		cout<<"testMyclass1():\n";
+		testMyclass1();
+	
+		cout<<"testMyclass2():\n";
+		testMyclass2();
+	}
+ 
+ }
+int main(int argc, char* argv[]){
+	if(argc==2) cout << "Hello "<<argv[1]<<"\nПривет "<<argv[1]<<endl;
+	else cout << "Hello World!\nПривет Мир!\n";
+	
+	testSyntax::test();
+	
+	return 0;
+}

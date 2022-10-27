@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="H:\CPP\QtPrpjects\ProjectsCPP\shildt\g21\list\VS\CMakeFiles\4a633e60893c015f9ac48b5868321652\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A8C4C842-C457-3A56-B3C2-235F67556E07}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

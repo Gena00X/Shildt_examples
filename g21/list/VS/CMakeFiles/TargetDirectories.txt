@@ -1,0 +1,4 @@
+H:/CPP/QtPrpjects/ProjectsCPP/shildt/g21/list/VS/CMakeFiles/main.dir
+H:/CPP/QtPrpjects/ProjectsCPP/shildt/g21/list/VS/CMakeFiles/INSTALL.dir
+H:/CPP/QtPrpjects/ProjectsCPP/shildt/g21/list/VS/CMakeFiles/ALL_BUILD.dir
+H:/CPP/QtPrpjects/ProjectsCPP/shildt/g21/list/VS/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,125 @@
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+#include "rusinconsole.h"
+using namespace std;
+void vline(int i), hline(int i);
+
+
+
+void test1(){
+	void(*p)(int i);
+	
+	p = vline;
+	
+	(*p)(4);//явный вызов через указатель
+	
+	p=hline;
+	
+	p(3);//неявный вызов через указатель 
+	//(не рекомендуется, так как выглядит 
+	//точно так же как вызов функции с 
+	//именем p которой на самом деле нет) 
+}
+
+/*
+использование указателя на функцию сравнения в 
+стандартной функции сортировки qsort из <cstdlib> 
+прототип функции выглядит так:
+void qsort(void *start, size_t length, size_t size, 
+			int(*compare)(const void *, const void *))
+где:
+start - укаазатель на начало массива
+length - длина массива
+size - размер элемента массива
+compare - указатель на функцию сравнения которая 
+должна иметь прототип вида 
+int name(const void *a, const void *b)
+и возвращать отрицательное значение если (*a)<(*b)
+ноль если (*a)==(*b)
+положительное значение если (*a)>(*b)
+*/ 
+
+
+int ccomp(const void *a, const void *b);
+
+void PTFTest1(){
+	char str[] = "Pointers to functions gives flexibility";
+	cout << "Строка:" << str << endl;
+	
+	qsort(str, strlen(str), 1, ccomp);
+
+	cout << "Отсортированная строка:" << str << endl;
+	
+}
+
+int icomp(const void *a, const void *b);
+
+void PTFTest2(){
+	int num[] = {10, 4, 3, 6, 5, 7, 8};
+	int i;
+	
+	qsort(num, 7, sizeof(int), icomp);
+	
+	for(i = 0; i<7; i++)
+		cout << num[i] << ' ';
+}
+
+//Указатели на перегруженные функции
+
+//Вывод на экран count пробелов 
+void space(int count){
+	for( ; count; count--) cout << ' ';
+}
+
+//Вывод на экран count символов заданных в параметре ch
+void space(int count, char ch){
+	for( ; count; count--) cout << ch;
+}
+
+void PTFTest3(){
+	/*Создание указателя на void функцию с одним int параметром*/
+	void (*PTF1i) (int);
+	
+	/*Создание указателя на void функцию с одним int параметром
+	 *char параметром*/
+	void (*PTF1i1ch) (int, char);
+	
+	PTF1i = space; //чаем адрес функции space(int count)
+	
+	PTF1i1ch = space; //получаем адрес функции space(int count, char ch)
+	
+	(*PTF1i)(20);
+	cout <<"|\n";
+	(*PTF1i1ch)(30,'x');
+	cout <<'\n';
+}
+
+
+int main(int argc, char* argv[]){
+	if(argc==2) cout << "Hello "<<argv[1]<<"\nПривет "<<argv[1]<<endl;
+	else cout << "Hello World!\nПривет Мир!\n";
+	
+	return 0;
+}
+
+
+
+//Function definitions
+void hline(int i){
+	for( ; i; i--) cout << "-";
+	cout << "\n";
+	
+}
+
+void vline(int i){
+	for( ; i; i--) cout << "|\n";
+}
+
+int ccomp (const void *a, const void *b){
+	return * (char *) a - * (char *) b;
+}
+
+int icomp(const void *a, const void *b){
+	return * (int *) a - * (int *) b;
+}
